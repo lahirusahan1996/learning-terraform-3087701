@@ -18,21 +18,21 @@ data "aws_vpc" "default" {
   default = true
 }
 
-resource "aws_instance" "blog" {
+resource "aws_instance" "blogs" {
   ami           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
 
-  vpc_security_group_ids = [module.blog.sg.security_group_id]
+  vpc_security_group_ids = [module.blogs.sg.security_group_id]
 
   tags = {
     Name = "Learning Terraform"
   }
 }
 
-module "blog_sg" {
+module "blogs_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "4.17.1"
-  name = "blog_new"
+  name = "blogs_new"
 
   vpc_id = data.aws_vpc.default.id
   ingress_rules       = ["http-80-tcp","https-443-tcp"]
